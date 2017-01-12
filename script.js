@@ -1,10 +1,18 @@
 var settings = {
+  strictMode: false
+};
+var game = {
   gameRunning: false,
   gameOver: false,
-  strictMode: false,
-  computersTurn: false
+  computersTurn: false,
+  fields: ['top-left', 'top-right', 'bot-left', 'bot-right'],
+  series: []
 };
-var series = [];
+
+function initGame() {
+  addEL(arrOfDomElements(game.fields), 'click', getAttributeVal);
+}
+initGame();
 function randomNumBetween(lowerBoundary, upperBoundary) {
   lowerBoundary = Math.ceil(lowerBoundary);
   upperBoundary = Math.floor(upperBoundary);
@@ -16,8 +24,30 @@ function pickRandomField() {
 }
 
 function nextComputerStep() {
-  return series.push(pickRandomField()); 
+  var field = pickRandomField();
+  return game.series.push(field); 
 }
-// document.addEventListener('click', function(event) {
-//   nextComputerStep();
-// });
+
+function getAttributeVal(element, attributeName) {
+  console.log(element.getAttribute(attributeName));
+  attrVal = element.getAttribute(attributeName);
+  game.series.push(attrVal);
+}
+
+function addEL(elementsArray, eventType, action) {
+  for (var i = 0, l = elementsArray.length; i < l; i++) {
+    var element = elementsArray[i];
+    element.addEventListener(eventType, function(e) {
+      action(this, 'data-value');
+    })
+  }
+}
+
+function arrOfDomElements(ArrOfIds) {
+  var elements = [];
+  for (var i = 0, l = ArrOfIds.length; i < l; i++) {
+    var v = ArrOfIds[i];
+    elements.push(document.getElementById(v));
+  }
+  return elements;
+}
