@@ -16,47 +16,73 @@ function initGame() {
   computerStep();
 }
 initGame();
-function randomNumBetween(lowerBoundary, upperBoundary) {
-  lowerBoundary = Math.ceil(lowerBoundary);
-  upperBoundary = Math.floor(upperBoundary);
-  return Math.floor(Math.random() * (upperBoundary - lowerBoundary + 1) + lowerBoundary);
-}
-
-function pickRandomField() {
-  return randomNumBetween(1,4);
-}
 
 function computerStep() {
   if (game.computersTurn) {
     var field = pickRandomField();
-    console.log('Comp picks:', field);
     game.computersTurn = false;
-    return game.correctSeries.push(field); 
+    game.correctSeries.push(field); 
   }
+
+  console.log('Comp picks:', field);
+  console.log('Correct Series:', game.correctSeries);
+
 }
 function playerStep(fieldElement, fieldNumber) {
+
   if (!game.computersTurn) {
     var field = getAttributeVal(fieldElement, fieldNumber);
     game.playerSeries.push(Number(attrVal));
+    console.log("Player picks", field);
+    console.log('Player Series:', game.playerSeries);
+    checkGameState(game.playerSeries, game.correctSeries);
+  }
+
+  if (game.playerSeries.length === game.correctSeries.length) {
     game.computersTurn = true;
     nextRound();
   }
-  console.log("Player picks", field);
+
 }
 
 function nextRound() {
-  checkGameState();
+  // checkGameState();
+  game.playerSeries = [];
   game.computersTurn ? computerStep() : null;
 }
 
 function checkGameState() {
-  var toBeChecked = game.playerSeries[game.playerSeries.length - 1],
-      checkAgainst = game.correctSeries[game.correctSeries.length - 1];
-  if (toBeChecked === checkAgainst) {
-    console.log('game is running');
+  var everythingCorrect = compareArrays(game.playerSeries, game.correctSeries);
+  console.log('The player series is equal to the Comp Series', everythingCorrect);
+  if (everythingCorrect) {
+    // game.playerSeries = [];
+  } else {
+    gameOver();
   }
 }
-function getAttributeVal(element, attributeName, resultArray) {
+function gameOver() {
+  console.log("Game Over");
+  console.log("Starting new Game..");
+  game.correctSeries = [], game.playerSeries = [];
+  game.computersTurn = true;
+  computerStep();
+}
+
+// ===================================
+// Utility Functions, not Game related
+// ===================================
+
+function compareArrays(a, b) {
+  for (var i = 0, l = a.length; i < l; i++) {
+    var v = a[i];
+    if (b[i] !== v) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function getAttributeVal(element, attributeName) {
   attrVal = element.getAttribute(attributeName);
   return attrVal;
 }
@@ -70,11 +96,21 @@ function addEL(elementsArray, eventType, action) {
   }
 }
 
-function arrOfDomElements(ArrOfIds) {
+function arrOfDomElements(arrOfIds) {
   var elements = [];
-  for (var i = 0, l = ArrOfIds.length; i < l; i++) {
-    var v = ArrOfIds[i];
+  for (var i = 0, l = arrOfIds.length; i < l; i++) {
+    var v = arrOfIds[i];
     elements.push(document.getElementById(v));
   }
   return elements;
+}
+
+function randomNumBetween(lowerBoundary, upperBoundary) {
+  lowerBoundary = Math.ceil(lowerBoundary);
+  upperBoundary = Math.floor(upperBoundary);
+  return Math.floor(Math.random() * (upperBoundary - lowerBoundary + 1) + lowerBoundary);
+}
+
+function pickRandomField() {
+  return randomNumBetween(1,4);
 }
