@@ -6,11 +6,14 @@ var game = {
   gameOver: false,
   computersTurn: false,
   fields: ['top-left', 'top-right', 'bot-left', 'bot-right'],
-  series: []
+  correctSeries: [],
+  playerSeries: []
 };
 
 function initGame() {
-  addEL(arrOfDomElements(game.fields), 'click', getAttributeVal);
+  addEL(arrOfDomElements(game.fields), 'click', playerStep);
+  game.computersTurn = true;
+  computerStep();
 }
 initGame();
 function randomNumBetween(lowerBoundary, upperBoundary) {
@@ -23,15 +26,38 @@ function pickRandomField() {
   return randomNumBetween(1,4);
 }
 
-function nextComputerStep() {
-  var field = pickRandomField();
-  return game.series.push(field); 
+function computerStep() {
+  if (game.computersTurn) {
+    var field = pickRandomField();
+    console.log('Comp picks:', field);
+    game.computersTurn = false;
+    return game.correctSeries.push(field); 
+  }
+}
+function playerStep(fieldElement, fieldNumber) {
+  if (!game.computersTurn) {
+    getAttributeVal(fieldElement, fieldNumber, "Player picks:", game.playerSeries);
+    game.computersTurn = true;
+    nextRound();
+  }
 }
 
-function getAttributeVal(element, attributeName) {
-  console.log(element.getAttribute(attributeName));
+function nextRound() {
+  checkGameState();
+  game.computersTurn ? computerStep() : null;
+}
+
+function checkGameState() {
+  var toBeChecked = game.playerSeries[game.playerSeries.length - 1],
+      checkAgainst = game.correctSeries[game.correctSeries.length - 1];
+  if (toBeChecked === checkAgainst) {
+    console.log('game is running');
+  }
+}
+function getAttributeVal(element, attributeName, prependLog, resultArray) {
+  console.log(prependLog, element.getAttribute(attributeName));
   attrVal = element.getAttribute(attributeName);
-  game.series.push(attrVal);
+  resultArray.push(Number(attrVal));
 }
 
 function addEL(elementsArray, eventType, action) {
