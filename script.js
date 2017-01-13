@@ -36,10 +36,12 @@ function computerStep() {
 }
 function playerStep(fieldElement, fieldNumber) {
   if (!game.computersTurn) {
-    getAttributeVal(fieldElement, fieldNumber, "Player picks:", game.playerSeries);
+    var field = getAttributeVal(fieldElement, fieldNumber);
+    game.playerSeries.push(Number(attrVal));
     game.computersTurn = true;
     nextRound();
   }
+  console.log("Player picks", field);
 }
 
 function nextRound() {
@@ -54,10 +56,9 @@ function checkGameState() {
     console.log('game is running');
   }
 }
-function getAttributeVal(element, attributeName, prependLog, resultArray) {
-  console.log(prependLog, element.getAttribute(attributeName));
+function getAttributeVal(element, attributeName, resultArray) {
   attrVal = element.getAttribute(attributeName);
-  resultArray.push(Number(attrVal));
+  return attrVal;
 }
 
 function addEL(elementsArray, eventType, action) {
