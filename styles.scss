@@ -1,23 +1,25 @@
 body {
-  background: purple; }
-
+  background: purple;
+}
 #field-wrap {
   display: flex;
   justify-content: center;
   /* align-items: center; */
   height: 90vh;
-  flex-wrap: wrap; }
-
+  flex-wrap: wrap;
+}
 .field {
   /* height: 45vh; */
   min-height: 200px;
   width: 45%;
   background: red;
   border: black 1px solid;
-  display: inline-block; }
-  .field:hover {
-    background: #ff3333; }
-  .field:active {
-    background: #cc0000; }
+  display: inline-block;
 
-/*# sourceMappingURL=styles.css.map */
+  &:hover {
+    background: lighten(red, 10%);
+  }
+  &:active {
+    background: darken(red, 10%);
+  }
+}

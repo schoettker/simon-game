@@ -18,6 +18,9 @@ function initGame() {
 initGame();
 
 function computerStep() {
+
+  displayRounds();
+
   if (game.computersTurn) {
     var field = pickRandomField();
     game.computersTurn = false;
@@ -68,6 +71,10 @@ function gameOver() {
   computerStep();
 }
 
+function displayRounds() {
+  document.getElementById('rounds').innerHTML = game.correctSeries.length + 1;
+}
+// displayRounds();
 // ===================================
 // Utility Functions, not Game related
 // ===================================
