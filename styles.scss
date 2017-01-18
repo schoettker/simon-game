@@ -1,3 +1,9 @@
+$color1: yellow;
+$color2: blue;
+$color3: red;
+$color4: green;
+
+
 body {
   background: purple;
 }
@@ -12,14 +18,45 @@ body {
   /* height: 45vh; */
   min-height: 200px;
   width: 45%;
-  background: red;
+  background: $color3;
   border: black 1px solid;
   display: inline-block;
 
-  &:hover {
-    background: lighten(red, 10%);
+
+  &#top-left {
+    background: $color1;
+    &:hover {
+      background: lighten($color1, 10%);
+    }
+    &:active {
+      background: darken($color1, 10%);
+    }
   }
-  &:active {
-    background: darken(red, 10%);
+  &#bot-right {
+    background: $color4;
+    &:hover {
+      background: lighten($color4, 10%);
+    }
+    &:active {
+      background: darken($color4, 10%);
+    }
+  }
+  &#top-right {
+    background: $color2;
+    &:hover {
+      background: lighten($color2, 10%);
+    }
+    &:active {
+      background: darken($color2, 10%);
+    }
+  }
+  &#bot-left {
+    background: $color3;
+    &:hover {
+      background: lighten($color3, 10%);
+    }
+    &:active {
+      background: darken($color3, 10%);
+    }
   }
 }

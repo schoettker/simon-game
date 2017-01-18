@@ -15,9 +15,29 @@ body {
   background: red;
   border: black 1px solid;
   display: inline-block; }
-  .field:hover {
-    background: #ff3333; }
-  .field:active {
-    background: #cc0000; }
+  .field#top-left {
+    background: yellow; }
+    .field#top-left:hover {
+      background: #ffff33; }
+    .field#top-left:active {
+      background: #cccc00; }
+  .field#bot-right {
+    background: green; }
+    .field#bot-right:hover {
+      background: #00b300; }
+    .field#bot-right:active {
+      background: #004d00; }
+  .field#top-right {
+    background: blue; }
+    .field#top-right:hover {
+      background: #3333ff; }
+    .field#top-right:active {
+      background: #0000cc; }
+  .field#bot-left {
+    background: red; }
+    .field#bot-left:hover {
+      background: #ff3333; }
+    .field#bot-left:active {
+      background: #cc0000; }
 
 /*# sourceMappingURL=styles.css.map */
