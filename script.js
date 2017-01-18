@@ -75,6 +75,7 @@ function displayRounds() {
   document.getElementById('rounds').innerHTML = game.correctSeries.length + 1;
 }
 // displayRounds();
+
 // ===================================
 // Utility Functions, not Game related
 // ===================================
